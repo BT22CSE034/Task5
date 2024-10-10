@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Map Example</title>
+    <style>
+      #map {
+        height: 400px;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>My Google Map</h3>
+    <div id="map"></div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCn5dleO8yhChteTRbvGFKurGr5cLmrA_4&callback=initMap" async defer></script>
+
+    <script>
+      let map;
+      function initMap() {
+        // Center the map on VNIT, Nagpur
+        const vnitLocation = { lat: 21.1458, lng: 79.0882 };
+
+        // Create the map
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 15,
+          center: vnitLocation,
+        });
+
+        // Add a marker with custom icon and a message
+        const marker = new google.maps.Marker({
+          position: vnitLocation,
+          map: map,
+          icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png', // Change the icon URL to your desired image
+        });
+
+        const infoWindow = new google.maps.InfoWindow({
+          content: "<h3>VNIT Nagpur</h3><p>Welcome to Visvesvaraya National Institute of Technology.</p>",
+        });
+
+        // Add a click listener to the marker
+        marker.addListener('click', function () {
+          infoWindow.open(map, marker);
+        });
+
+        // Add event listener to dynamically add markers on user click
+        map.addListener('click', function (event) {
+          addMarker(event.latLng);
+        });
+      }
+
+      // Function to add marker at the clicked location
+      function addMarker(location) {
+        new google.maps.Marker({
+          position: location,
+          map: map,
+        });
+      }
+    </script>
+  </body>
+</html>
